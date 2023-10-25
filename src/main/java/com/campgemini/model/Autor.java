@@ -1,11 +1,13 @@
 package com.campgemini.model;
 
 import java.util.Date;
+import java.util.Set;
+
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="autor")
+@Table(name="autores")
 public class Autor {
 
 	@Id
@@ -22,5 +24,7 @@ public class Autor {
 	@Column
 	private Date fechaNacimiento;
 	
+	@OneToMany(mappedBy="autor", targetEntity=Libro.class, cascade=CascadeType.ALL)
+	private Set<Libro> libros;
 	
 }
