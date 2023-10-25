@@ -24,7 +24,7 @@ public class LectorController {
 	public String saveLector(Lector l) {
 		this.lectorService.saveLector(l);
 		
-		return null;
+		return "redirect";
 	}
 	@GetMapping("/delete")
 	public String deleteLector(long id) {
