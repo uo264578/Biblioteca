@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="copia")
-public class Copia extends Libro{
+public class Copia{
 
 	@Id
 	@Column

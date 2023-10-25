@@ -7,7 +7,7 @@ import java.util.Set;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="autores")
+@Table(name="autor")
 public class Autor {
 
 	@Id

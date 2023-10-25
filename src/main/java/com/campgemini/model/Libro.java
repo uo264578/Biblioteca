@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="libro")
-public class Libro extends Autor{
+public class Libro{
 
 	@Id
 	@Column
