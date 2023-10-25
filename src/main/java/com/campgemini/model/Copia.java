@@ -23,9 +23,9 @@ public class Copia extends Libro{
 	@Column
 	private EstadoCopia estadoCopia;
 	
-	@Column
-	private Prestamo prestamo;
-	
+//	@Column
+//	private Prestamo prestamo;
+//	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="fk_libro")
 	private Libro libro;
