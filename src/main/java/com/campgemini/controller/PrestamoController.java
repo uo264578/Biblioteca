@@ -26,12 +26,12 @@ public class PrestamoController {
 	@GetMapping("/save")
 	public String savePrestamo(Prestamo p) {
 			this.prestamoService.savePrestamo(p);
-		return null;
+		return "redirect:/";
 		}
 	
 	public String deletePrestamo(long id) {
 		this.prestamoService.deletePrestamoById(id);
-		return null;
+		return "redirect:/";
 	}
 	
 	@GetMapping("/update/{id}")

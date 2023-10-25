@@ -24,12 +24,12 @@ public class LectorController {
 	public String saveLector(Lector l) {
 		this.lectorService.saveLector(l);
 		
-		return "redirect";
+		return "redirect:/";
 	}
 	@GetMapping("/delete")
 	public String deleteLector(long id) {
 		this.lectorService.deleteLectorById(id);
-		return null;
+		return "redirect:/";
 	}
 	
 	@GetMapping("/update/{id}")

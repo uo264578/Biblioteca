@@ -24,12 +24,12 @@ public class MultaController {
 	@GetMapping("/save")
 	public String saveMulta(Multa m) {
 		this.multaService.saveMulta(m);
-		return null;
+		return "redirect:/";
 	}
 	
 	public String deleteMulta(long id) {
 		this.multaService.deleteMultaById(id);
-		return null;
+		return "redirect:/";
 	}
 	
 	@GetMapping("/update/{id}")
