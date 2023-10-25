@@ -1,7 +1,5 @@
 package com.campgemini.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,14 +7,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.campgemini.model.Autor;
-import com.campgemini.service.AutorService;
+import com.campgemini.model.Libro;
+import com.campgemini.service.LibroService;
 
-
-public class AutorController {
+public class LibroController {
 
 	@Autowired
-	private AutorService autorService;
+	private LibroService libroService;
 	
 //	@GetMapping("/")
 //	public String viewHomePage(Model model) {
@@ -24,31 +21,28 @@ public class AutorController {
 //	}
 	
 	@PostMapping("/save")
-	public String saveAutor(@ModelAttribute("autor") Autor autor) {
-		autorService.saveAutor(autor);
+	public String saveLibro(@ModelAttribute("libro") Libro libro) {
+		libroService.saveLibro(libro);
 		return "redirect:/";
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String deleteAutor(@PathVariable(value="id") long id) {
-		this.autorService.deleteAutorById(id);
+	public String deleteLibro(@PathVariable(value="id") long id) {
+		this.libroService.deleteLibroById(id);
 		return "redirect:/";
 	}
 	
 	@GetMapping("/update/{id}")
 	public String showFormForUpdate(@PathVariable(value="id") long id,Model model) {
-		Autor autor= this.autorService.getAutorById(id);
-		model.addAttribute("autor", autor);
-		return "actualizar_autor";
+		Libro libro= this.libroService.getLibroById(id);
+		model.addAttribute("libro", libro);
+		return "actualizar_libro";
 	}
 	
 	@GetMapping("/add")
-	public String showNewAutorForm(Model model) {
-		Autor autor = new Autor();
-		model.addAttribute("autor",autor);
-		return "nuevo_autor";
+	public String showNewLibroForm(Model model) {
+		Libro libro = new Libro();
+		model.addAttribute("libro",libro);
+		return "nuevo_libro";
 	}
-	
-
 }
-
