@@ -7,29 +7,60 @@
 </head>
 <body>
 <h3>Listado de libros</h3>
+<a th:href="@{/add/libro}" class ="btn btn-primary btn-sm mb-3">Añadir libro</a>
 <div class="container"> 
 	<table class="table table-striped table-responsive-md">
 		<thead>
 			<tr>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=titulo&sortDir=' + ${reverseSortDir}}">Titulo</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=tipo&sortDir=' + ${reverseSortDir}}">Tipo</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=editorial&sortDir=' + ${reverseSortDir}}">Editorial</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=año&sortDir=' + ${reverseSortDir}}">Año</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.titulo&sortDir=' + ${reverseSortDir}}">Titulo</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.tipo&sortDir=' + ${reverseSortDir}}">Tipo</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.editorial&sortDir=' + ${reverseSortDir}}">Editorial</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.anyo&sortDir=' + ${reverseSortDir}}">Año</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.autor.nombre&sortDir=' + ${reverseSortDir}}">Autor</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=estadoCopia&sortDir=' + ${reverseSortDir}}">Estado</a></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="libro:${listLibros}">
-				<td th:text="${libro.titulo}"></td>
-				<td th:text="${libro.tipo}"></td>
-				<td th:text="${libro.editorial}"></td>
-				<td th:text="${libro.anyo}"></td>
+			<tr th:each="copia:${listCopias}">
+				<td th:text="${copia.libro.titulo}"></td>
+				<td th:text="${copia.libro.tipo}"></td>
+				<td th:text="${copia.libro.editorial}"></td>
+				<td th:text="${copia.libro.anyo}"></td>
+				<td th:text="${copia.libro.autor.nombre}"></td>
+				<td th:text="${copia.estadoCopia}"></td>
 				<td>
-					<a th:href="@{/update/{id}(id=${curse.id})}" class="btn btn-primary">Actualizar</a>
-					<a th:href="@{/delete/{id}(id=${curse.id})}" class="btn btn-danger">Eliminar</a>
+					<a th:href="@{/prestar/{id}(id=${copia.id})}" class="btn btn-primary">Prestar</a>
+					<a th:href="@{/devolver/{id}(id=${copia.id})}" class="btn btn-danger">Devolver</a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+</div>
+<div th:if="${totalPages>1}">
+	<div class="row col-sm-10">
+		<div class="col-sm-5">Total filas: [[${totalItems}]]</div>
+		<div class="col-sm-3">
+			<span th:each="i:${#numbers.sequence(1,totalPages)}">
+				<a th:if="${currentPage != 1}" 
+				th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+					[[${i}]]
+				</a>
+				<span th:unless="${currentPage != 1}">[[${i}]]</span>
+			</span>
+		</div>
+		<div class="col-sm-1">
+			<a th:if="${currentPage < totalPages}" 
+				th:href="@{'/page/' + ${currentPage+1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+					Proxima
+				</a>
+			</div>
+		<div class="col-sm-1">
+			<a th:if="${currentPage < totalPages}" 
+				th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+					Ultima
+				</a>
+			</div>
+	</div>
 </div>
 </body>
 </html>
