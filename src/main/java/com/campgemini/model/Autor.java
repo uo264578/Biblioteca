@@ -1,5 +1,6 @@
 package com.campgemini.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class Autor {
 	private String nacionalidad;
 	
 	@Column
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	
 	@OneToMany(mappedBy="autor", targetEntity=Libro.class, cascade=CascadeType.ALL)
 	private Set<Libro> libros;
