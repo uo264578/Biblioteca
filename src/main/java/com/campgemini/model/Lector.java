@@ -24,7 +24,7 @@ public class Lector {
 	
 //	@Column
 //	private Multa multa;
-//	
-//	@OneToMany(mappedBy="lector", targetEntity=Prestamo.class, cascade=CascadeType.ALL)
-//	private Set<Prestamo> prestamos;
+	
+	@OneToMany(mappedBy="lector", targetEntity=Prestamo.class, cascade=CascadeType.ALL)
+	private Set<Prestamo> prestamos;
 }
