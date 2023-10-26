@@ -15,31 +15,31 @@ public class LectorController {
 	@Autowired
 	private LectorService lectorService;
 	
-	@GetMapping("/")
-	public String homeLector() {
-		return null;
-		
-	}
-	@GetMapping("/save")
+//	@GetMapping("/")
+//	public String homeLector() {
+//		return null;
+//		
+//	}
+	@GetMapping("/save/lector")
 	public String saveLector(Lector l) {
 		this.lectorService.saveLector(l);
 		
 		return "redirect:/";
 	}
-	@GetMapping("/delete")
-	public String deleteLector(long id) {
+	@GetMapping("/delete/lector/{id}")
+	public String deleteLector(@PathVariable(value="id")  long id) {
 		this.lectorService.deleteLectorById(id);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/update/{id}")
+	@GetMapping("/update/lector/{id}")
 	public String showFormForUpdate(@PathVariable(value="id") long id, Model model) {
 		Lector lector=this.lectorService.getLectorById(id);
 		model.addAttribute("lector", lector);
 		return "actualizar_lector";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/add/lector")
 	public String showNewLectorForm(Model model) {
 		Lector lector= new Lector();
 		model.addAttribute("lector", lector);

@@ -23,26 +23,26 @@ public class AutorController {
 		return "redirect:/";
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/save/autor")
 	public String saveAutor(@ModelAttribute("autor") Autor autor) {
 		autorService.saveAutor(autor);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/delete/autor/{id}")
 	public String deleteAutor(@PathVariable(value="id") long id) {
 		this.autorService.deleteAutorById(id);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/update/{id}")
+	@GetMapping("/update/autor/{id}")
 	public String showFormForUpdate(@PathVariable(value="id") long id,Model model) {
 		Autor autor= this.autorService.getAutorById(id);
 		model.addAttribute("autor", autor);
 		return "actualizar_autor";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/add/autor")
 	public String showNewAutorForm(Model model) {
 		Autor autor = new Autor();
 		model.addAttribute("autor",autor);
