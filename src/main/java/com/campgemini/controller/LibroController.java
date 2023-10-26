@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.campgemini.model.Libro;
 import com.campgemini.service.LibroService;
 
+@Controller
 public class LibroController {
 
 	@Autowired
@@ -21,7 +23,7 @@ public class LibroController {
 	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
-		return findPaginated(1,"nombre","asc",model);
+		return findPaginated(1,"titulo","asc",model);
 	}
 	
 	@GetMapping("/page/{pageNo}")
@@ -33,13 +35,17 @@ public class LibroController {
 			) {
 		int pageSize=4;
 		Page<Libro> page=libroService.findPaginated(pageNo, pageSize, sortField, sortDir);
-		List<Libro> listLibros=page.getContent();
+		//List<Libro> listLibros=page.getContent();
+		List<Libro> listLibros=libroService.getAllLibro();
+		
+		System.out.println(listLibros.size());
 		
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("num", listLibros.size());
 		model.addAttribute("listLibros", listLibros);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
 		

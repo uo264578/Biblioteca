@@ -3,6 +3,7 @@ package com.campgemini.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,16 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.campgemini.model.Autor;
 import com.campgemini.service.AutorService;
 
-
+@Controller
 public class AutorController {
 
 	@Autowired
 	private AutorService autorService;
-	
-	@GetMapping("/")
-	public String viewHomePage() {
-		return "redirect:/";
-	}
 	
 	@PostMapping("/save/autor")
 	public String saveAutor(@ModelAttribute("autor") Autor autor) {

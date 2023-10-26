@@ -34,6 +34,48 @@ public class Prestamo {
 	@OneToOne
 	@JoinColumn(name="fk_copia")
 	private Copia copia;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDate getInicio() {
+		return inicio;
+	}
+
+	public void setInicio(LocalDate inicio) {
+		this.inicio = inicio;
+	}
+
+	public LocalDate getFin() {
+		return fin;
+	}
+
+	public void setFin(LocalDate fin) {
+		this.fin = fin;
+	}
+
+	public Lector getLector() {
+		return lector;
+	}
+
+	public void setLector(Lector lector) {
+		this.lector = lector;
+	}
+
+	public Copia getCopia() {
+		return copia;
+	}
+
+	public void setCopia(Copia copia) {
+		this.copia = copia;
+	}
+	
+	
 	
 	
 }

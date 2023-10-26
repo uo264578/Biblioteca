@@ -33,7 +33,7 @@ public class Libro{
 	private String editorial;
 	
 	@Column
-	private int año;
+	private int anyo;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="fk_autor")
@@ -41,4 +41,62 @@ public class Libro{
 	
 	@OneToMany(mappedBy="libro", targetEntity=Copia.class, cascade=CascadeType.ALL)
 	private Set<Copia> copias;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public TipoLibro getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoLibro tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getEditorial() {
+		return editorial;
+	}
+
+	public void setEditorial(String editorial) {
+		this.editorial = editorial;
+	}
+
+	public int getAnyo() {
+		return anyo;
+	}
+
+	public void setAnyo(int año) {
+		this.anyo = año;
+	}
+
+	public Autor getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Autor autor) {
+		this.autor = autor;
+	}
+
+	public Set<Copia> getCopias() {
+		return copias;
+	}
+
+	public void setCopias(Set<Copia> copias) {
+		this.copias = copias;
+	}
+	
+	
 }

@@ -15,7 +15,6 @@
 				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=tipo&sortDir=' + ${reverseSortDir}}">Tipo</a></th>
 				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=editorial&sortDir=' + ${reverseSortDir}}">Editorial</a></th>
 				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=año&sortDir=' + ${reverseSortDir}}">Año</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=autor&sortDir=' + ${reverseSortDir}}">Autor</a></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,7 +22,7 @@
 				<td th:text="${libro.titulo}"></td>
 				<td th:text="${libro.tipo}"></td>
 				<td th:text="${libro.editorial}"></td>
-				<td th:text="${libro.año}"></td>
+				<td th:text="${libro.anyo}"></td>
 				<td>
 					<a th:href="@{/update/{id}(id=${curse.id})}" class="btn btn-primary">Actualizar</a>
 					<a th:href="@{/delete/{id}(id=${curse.id})}" class="btn btn-danger">Eliminar</a>
