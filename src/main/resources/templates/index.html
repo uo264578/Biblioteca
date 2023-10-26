@@ -2,10 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Cursos</title>
+<title>Biblioteca</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<h1>Hola</h1>
+<h3>Listado de libros</h3>
+<div class="container"> 
+	<table class="table table-striped table-responsive-md">
+		<thead>
+			<tr>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=titulo&sortDir=' + ${reverseSortDir}}">Titulo</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=tipo&sortDir=' + ${reverseSortDir}}">Tipo</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=editorial&sortDir=' + ${reverseSortDir}}">Editorial</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=año&sortDir=' + ${reverseSortDir}}">Año</a></th>
+				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=autor&sortDir=' + ${reverseSortDir}}">Autor</a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="libro:${listLibros}">
+				<td th:text="${libro.titulo}"></td>
+				<td th:text="${libro.tipo}"></td>
+				<td th:text="${libro.editorial}"></td>
+				<td th:text="${libro.año}"></td>
+				<td>
+					<a th:href="@{/update/{id}(id=${curse.id})}" class="btn btn-primary">Actualizar</a>
+					<a th:href="@{/delete/{id}(id=${curse.id})}" class="btn btn-danger">Eliminar</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 </body>
 </html>
