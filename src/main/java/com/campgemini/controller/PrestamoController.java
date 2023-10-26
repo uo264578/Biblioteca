@@ -17,32 +17,32 @@ public class PrestamoController {
 	@Autowired
 	private PrestamoService prestamoService;
 	
-	@GetMapping("/")
-	public String viewHomePage() {
-		return "index";
-	}
+//	@GetMapping("/")
+//	public String viewHomePage() {
+//		return "index";
+//	}
 	
-	@PostMapping("/save")
-	public String saveAutor(@ModelAttribute("prestamo") Prestamo prestamo) {
+	@PostMapping("/save/prestamo")
+	public String savePrestamo(@ModelAttribute("prestamo") Prestamo prestamo) {
 		prestamoService.savePrestamo(prestamo);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/delete/prestamo/{id}")
 	public String deletePrestamo(@PathVariable(value="id") long id) {
 		this.prestamoService.deletePrestamoById(id);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/update/{id}")
+	@GetMapping("/update/prestamo/{id}")
 	public String showFormForUpdate(@PathVariable(value="id") long id,Model model) {
 		Prestamo prestamo= this.prestamoService.getPrestamoById(id);
 		model.addAttribute("prestamo", prestamo);
 		return "actualizar_prestamo";
 	}
 	
-	@GetMapping("/add")
-	public String showNewAutorForm(Model model) {
+	@GetMapping("/add/prestamo")
+	public String showNewPrestamoForm(Model model) {
 		Prestamo prestamo = new Prestamo();
 		model.addAttribute("prestamo",prestamo);
 		return "nuevo_prestamo";

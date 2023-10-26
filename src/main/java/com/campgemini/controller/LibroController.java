@@ -20,26 +20,26 @@ public class LibroController {
 //		return findPaginated(1,"nombre","asc",model);
 //	}
 	
-	@PostMapping("/save")
+	@PostMapping("/save/libro")
 	public String saveLibro(@ModelAttribute("libro") Libro libro) {
 		libroService.saveLibro(libro);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/delete/libro/{id}")
 	public String deleteLibro(@PathVariable(value="id") long id) {
 		this.libroService.deleteLibroById(id);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/update/{id}")
+	@GetMapping("/update/libro/{id}")
 	public String showFormForUpdate(@PathVariable(value="id") long id,Model model) {
 		Libro libro= this.libroService.getLibroById(id);
 		model.addAttribute("libro", libro);
 		return "actualizar_libro";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/add/libro")
 	public String showNewLibroForm(Model model) {
 		Libro libro = new Libro();
 		model.addAttribute("libro",libro);

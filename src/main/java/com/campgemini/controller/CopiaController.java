@@ -20,26 +20,26 @@ public class CopiaController {
 //		return findPaginated(1,"nombre","asc",model);
 //	}
 	
-	@PostMapping("/save")
+	@PostMapping("/save/copia")
 	public String saveCopia(@ModelAttribute("copia") Copia libro) {
 		copiaService.saveCopia(libro);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/delete/copia/{id}")
 	public String deleteCopia(@PathVariable(value="id") long id) {
 		this.copiaService.deleteCopiaById(id);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/update/{id}")
+	@GetMapping("/update/copia/{id}")
 	public String showFormForUpdate(@PathVariable(value="id") long id,Model model) {
 		Copia copia= this.copiaService.getCopiaById(id);
 		model.addAttribute("copia", copia);
 		return "actualizar_copia";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/add/copia")
 	public String showNewCopiaForm(Model model) {
 		Copia copia = new Copia();
 		model.addAttribute("copia",copia);
