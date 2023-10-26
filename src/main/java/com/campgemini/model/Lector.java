@@ -22,8 +22,9 @@ public class Lector {
 	@Column
 	private String direccion;
 	
-//	@Column
-//	private Multa multa;
+	@OneToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="fk_multa")
+	private Multa multa;
 	
 	@OneToMany(mappedBy="lector", targetEntity=Prestamo.class, cascade=CascadeType.ALL)
 	private Set<Prestamo> prestamos;
