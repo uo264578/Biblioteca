@@ -13,6 +13,7 @@ public interface CopiaService {
 	List<Copia> getAllCopias();
 	void saveCopia(Copia c);
 	void deleteCopiaById(long id);
+	void updatePrestadoCopiaById(long id);
 	
 	Page<Copia> findPaginated(int pageNum, int pageSize, String sortField, String sortDirection);
 }

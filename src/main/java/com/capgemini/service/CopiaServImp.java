@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.model.Copia;
+import com.capgemini.model.EstadoCopia;
 import com.capgemini.repository.CopiaRepository;
 
 @Service
@@ -56,6 +57,11 @@ public class CopiaServImp implements CopiaService{
 		Pageable pageable = PageRequest.of(pageNum -1, pageSize, sort);
 				
 		return this.copiaRepository.findAll(pageable);
+	}
+
+	@Override
+	public void updatePrestadoCopiaById(long id) {
+		this.copiaRepository.getById(id).setEstadoCopia(EstadoCopia.Prestado);
 	}
 
 }

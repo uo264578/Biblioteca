@@ -57,17 +57,11 @@ header {
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="copia:${listCopias}">
-				<td th:text="${copia.libro.titulo}"></td>
-				<td th:text="${copia.libro.tipo}"></td>
-				<td th:text="${copia.libro.editorial}"></td>
-				<td th:text="${copia.libro.anyo}"></td>
-				<td th:text="${copia.libro.autor.nombre}"></td>
-				<td th:text="${copia.estadoCopia}"></td>
-				<td>
 					<a th:href="@{/add/prestamo}" class="btn btn-primary">Prestar</a>
 					<a th:href="@{/devolver/{id}(id=${copia.id})}" class="btn btn-danger">Devolver</a>
 				</td>
+					</td>
+				</div>
 			</tr>
 		</tbody>
 	</table>
