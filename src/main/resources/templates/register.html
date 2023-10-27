@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registro</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+	
+	<main>
+		<form class="p-3 mb-2 bg-light" action="#" th:action="@{/register}"
+			th:object="${user}" method="post">
+			
+			<div class="form-group">
+				<p>
+					<label for="username" class="form-label">Nombre de usuario:</label>
+					<input type="text" class="form-control" id="username" th:field="*{username}" />
+				</p>
+			</div>
+
+			<div class="form-group">
+				<p>
+					<label for="password" class="form-label">Contraseña:</label>
+					<input type="password" class="form-control" id="password" th:field="*{password}" />
+				</p>
+			</div>
+
+			<div class="form-group">
+	        	<input type="submit" class="btn btn-primary" value="Registrarse" />
+	        	<input type="reset" class="btn btn-secondary" value="Vaciar datos" />
+	        	 <a th:href="@{/login}">Logueate</a>
+	        </div>
+		</form>
+	</main>
+</body>
+</html>

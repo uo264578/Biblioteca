@@ -8,7 +8,7 @@
 		<version>3.1.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.campgemini</groupId>
+	<groupId>com.capgemini</groupId>
 	<artifactId>Biblioteca</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Biblioteca</name>
@@ -42,6 +42,16 @@
 			<artifactId>lombok</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
