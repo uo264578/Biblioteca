@@ -65,7 +65,7 @@ header {
 				<td th:text="${copia.libro.autor.nombre}"></td>
 				<td th:text="${copia.estadoCopia}"></td>
 				<td>
-					<a th:href="@{/prestar/{id}(id=${copia.id})}" class="btn btn-primary">Prestar</a>
+					<a th:href="@{/add/prestamo}" class="btn btn-primary">Prestar</a>
 					<a th:href="@{/devolver/{id}(id=${copia.id})}" class="btn btn-danger">Devolver</a>
 				</td>
 			</tr>
