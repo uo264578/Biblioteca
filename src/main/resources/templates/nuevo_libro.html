@@ -5,31 +5,68 @@
 <title>Añadir libro</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
+<style>
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-group h5 {
+        flex-basis: 10%; /* Establece el ancho deseado para la etiqueta */
+        padding-right: 0%; /* Espacio entre la etiqueta y el campo */
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+        flex-grow: 1; /* El campo de entrada ocupará el espacio restante */
+        max-width: 400px;
+    }
+    body{
+        margin-left: 20px;
+    }
+    
+</style>
 <body>
-<h3>Añadir libro</h3>
+<h2>Añadir libro</h2>
+
 
 <form action="#" th:action="@{/save/libro}" th:object="${libro}" method= "post">
-	<label for="tipoLibro">Titulo del libro:</label>
-	<input th:field="*{titulo}" type="text" class="form-control">
-	<label for="tipoLibro">Tipo de Libro:</label>
+	<div class="form-group">
+		<h5 for="tipoLibro">Titulo del libro:</h5>
+		<input th:field="*{titulo}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Tipo de Libro:</h5>
         <div th:each="t : ${T(com.capgemini.model.TipoLibro).values()}">
             <input type="radio" th:field="*{tipo}" th:value="${t}" id="${t}" />
             <label th:for="${t}" th:text="${t}"></label><br />
         </div>
-	<label for="tipoLibro">Editorial:</label>
-	<input th:field="*{editorial}" type="text" class="form-control">
-	<label for="tipoLibro">Año del libro:</label>
-	<input th:field="*{anyo}" type="number" class="form-control">
-
+    </div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Editorial:</h5>
+		<input th:field="*{editorial}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Año del libro:</h5>
+		<input th:field="*{anyo}" type="number" class="form-control">
+	</div>
 	
-	<label for="tipoLibro">Nombre del autor:</label>
-	<input th:field="*{autor.nombre}" type="text" class="form-control">
-	<label for="tipoLibro">Nacionalidad:</label>
-	<input th:field="*{autor.nacionalidad}" type="text"  class="form-control">
-	<label for="tipoLibro">Fecha de nacimiento:</label>
-	<input th:field="*{autor.fechaNacimiento}" type="datetime" class="form-control">
-	
+	<div class="form-group">
+		<h5 for="tipoLibro">Nombre del autor:</h5>
+		<input th:field="*{autor.nombre}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Nacionalidad:</h5>
+		<input th:field="*{autor.nacionalidad}" type="text"  class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Fecha de nacimiento:</h5>
+		<input th:field="*{autor.fechaNacimiento}" type="datetime" placeholder=" Año-mes-dia" class="form-control">
+	</div>
+	<div>
 	<button type="submit" class="btn btn-info col2">Guardar Libro</button>
+	<hr>
+	<a class="btn-volver" th:href="@{/}">Volver</a>
+	</div>
 </form>
 </body>
 </html>
