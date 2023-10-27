@@ -35,12 +35,14 @@ header {
 }
 	
 </style>
+
 <body>
 	 <header>
         <h1>Listado de libros</h1>
        <a th:href="@{/logout}" id="logoutButton" class ="btn btn-danger">Log out</a>
     </header>
-<a th:href="@{/add/libro}" class ="btn btn-primary btn-sm mb-3">Añadir libro</a>
+<a th:href="@{/add/libro}" id="añadirLibro" class="btn btn-primary btn-sm mb-3"   th:if="${isAdmin}">Añadir Libro</a>
+
 
 <div class="container"> 
 	<table class="table table-striped table-responsive-md">

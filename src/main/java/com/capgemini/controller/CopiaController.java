@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.capgemini.model.Copia;
 import com.capgemini.service.CopiaService;
@@ -37,7 +40,15 @@ public class CopiaController {
 		Page<Copia> page=copiaService.findPaginated(pageNo, pageSize, sortField, sortDir);
 		//List<Libro> listLibros=page.getContent();
 		List<Copia> listCopias=copiaService.getAllCopias();
-	
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		    if (authentication != null && authentication.getAuthorities() != null) {
+		        for (GrantedAuthority authority : authentication.getAuthorities()) {
+		            if ("ROLE_ADMIN".equals(authority.getAuthority())) {
+		                model.addAttribute("isAdmin", true);
+		            }
+		        }
+		    }
 		
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("sortField", sortField);
