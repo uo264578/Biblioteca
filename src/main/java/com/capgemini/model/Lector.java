@@ -27,6 +27,8 @@ public class Lector {
 	@JoinColumn(name="fk_multa")
 	private Multa multa;
 	
+	
+	
 	@OneToMany(mappedBy="lector", targetEntity=Prestamo.class, cascade=CascadeType.ALL)
 	private Set<Prestamo> prestamos;
 

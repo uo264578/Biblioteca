@@ -59,9 +59,16 @@ public class CopiaServImp implements CopiaService{
 		return this.copiaRepository.findAll(pageable);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updatePrestadoCopiaById(long id) {
 		this.copiaRepository.getById(id).setEstadoCopia(EstadoCopia.Prestado);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void updateDevueltoCopiaById(long id) {
+		this.copiaRepository.getById(id).setEstadoCopia(EstadoCopia.Biblioteca);
 	}
 
 }

@@ -59,7 +59,7 @@ header {
 		</thead>
 		<tbody>
 			<tr th:each="copia:${listCopias}" >
-				<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Biblioteca}">
+				<div>
 					<td th:text="${copia.libro.titulo}"></td>
 					<td th:text="${copia.libro.tipo}"></td>
 					<td th:text="${copia.libro.editorial}"></td>
@@ -67,10 +67,17 @@ header {
 						<td th:text="${copia.libro.autor.nombre}"></td>
 					<td th:text="${copia.estadoCopia}"></td>
 					<td>
-						<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
+						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
+						<form action="#" th:action="@{/add/prestamo/{idcopia}(idcopia=${copia.id})}" method="post">
     						<button type="submit" class="btn btn-primary">Prestar</button>
     					</form>
-						<a th:href="@{/devolver/{id}(id=${copia.id})}" class="btn btn-success">Devolver</a>
+    					</div>
+    					<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado}">
+						<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
+    						<button type="submit" class="btn btn-success">Devolver</button>
+    					</form>
+    					</div>
+    					
 					</td>
 					<td>
 						<a th:href="@{/delete/libro/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>

@@ -23,8 +23,9 @@ public class Copia{
 	@Column
 	private EstadoCopia estadoCopia;
 	
-//	@Column
-//	private Prestamo prestamo;
+	@OneToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="fk_prestamo")
+	private Prestamo prestamo;
 //	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="fk_libro")
@@ -52,6 +53,14 @@ public class Copia{
 
 	public void setLibro(Libro libro) {
 		this.libro = libro;
+	}
+
+	public Prestamo getPrestamo() {
+		return prestamo;
+	}
+
+	public void setPrestamo(Prestamo prestamo) {
+		this.prestamo = prestamo;
 	}
 	
 	

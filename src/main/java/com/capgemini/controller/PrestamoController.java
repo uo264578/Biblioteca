@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.capgemini.model.EstadoCopia;
 import com.capgemini.model.Lector;
 import com.capgemini.model.Prestamo;
 import com.capgemini.repository.LectorRepository;
@@ -47,6 +48,8 @@ public class PrestamoController {
 		prestamo.setLector(lector);
 		prestamoService.savePrestamo(prestamo);
 		
+		this.copiaService.getCopiaById(id).setPrestamo(prestamo);
+		
 		return "redirect:/";
 	}
 	
@@ -56,11 +59,11 @@ public class PrestamoController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/update/prestamo/{id}")
-	public String showFormForUpdate(@PathVariable(value="id") long id,Model model) {
-		Prestamo prestamo= this.prestamoService.getPrestamoById(id);
-		model.addAttribute("prestamo", prestamo);
-		return "actualizar_prestamo";
+	@RequestMapping(value = "/devolver/prestamo/{id}", method = RequestMethod.POST)
+	public String showFormForUpdate(@PathVariable(value="id") long idCopia,@PathVariable(value="id") long idPrestamo,Model model) {
+		this.copiaService.getCopiaById(idCopia).setEstadoCopia(EstadoCopia.Biblioteca);
+		//model.addAttribute("prestamo", prestamo);
+		return "redirect:/";
 	}
 //	
 //	@GetMapping("/add/prestamo")

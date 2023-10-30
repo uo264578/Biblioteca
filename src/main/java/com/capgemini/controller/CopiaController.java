@@ -18,8 +18,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.capgemini.model.Copia;
 import com.capgemini.model.Lector;
+import com.capgemini.model.Prestamo;
 import com.capgemini.service.CopiaService;
 import com.capgemini.service.LectorService;
+import com.capgemini.service.PrestamoService;
 
 @Controller
 public class CopiaController {
@@ -27,7 +29,11 @@ public class CopiaController {
 	@Autowired
 	private CopiaService copiaService;
 	
-	@Autowired LectorService lectorService;
+	@Autowired 
+	private LectorService lectorService;
+	
+	@Autowired 
+	private PrestamoService prestamoService;
 	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
