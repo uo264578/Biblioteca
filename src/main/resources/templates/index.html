@@ -39,7 +39,7 @@ header {
 <body>
 	 <header>
         <h1>Listado de libros</h1>
-<!-- <a th:href="@{/update/lector/{id}(id=${lector.id})}" id="perfilButton" class ="btn btn-secondary">Perfil</a>-->
+ <a th:href="@{/add/lector/}" id="perfilButton" class ="btn btn-secondary">Perfil</a>
        <a th:href="@{/logout}" id="logoutButton" class ="btn btn-danger">Log out</a>
     </header>
 <a th:href="@{/add/libro}" id="añadirLibro" class="btn btn-primary btn-sm mb-3"   th:if="${isAdmin}">Añadir Libro</a>
@@ -73,7 +73,7 @@ header {
 						<a th:href="@{/devolver/{id}(id=${copia.id})}" class="btn btn-success">Devolver</a>
 					</td>
 					<td>
-						<a th:href="@{/delete/libro/{id}(id=${copia.libro.id})}" th:if="${isAdmin}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
+						<a th:href="@{/delete/libro/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
 					</td>
 				</div>
 			</tr>

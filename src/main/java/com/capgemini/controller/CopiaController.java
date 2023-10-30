@@ -14,15 +14,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.capgemini.model.Copia;
+import com.capgemini.model.Lector;
 import com.capgemini.service.CopiaService;
+import com.capgemini.service.LectorService;
 
 @Controller
 public class CopiaController {
 
 	@Autowired
 	private CopiaService copiaService;
+	
+	@Autowired LectorService lectorService;
 	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
@@ -41,8 +46,16 @@ public class CopiaController {
 		//List<Libro> listLibros=page.getContent();
 		List<Copia> listCopias=copiaService.getAllCopias();
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		    if (authentication != null && authentication.getAuthorities() != null) {
+		 UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 if (userDetails != null) {
+		       
+		        String userId = userDetails.getUsername();      
+		        Lector lector = new Lector();
+		        lector.setNombre(userId);		        
+		        lectorService.saveLector(lector);
+		    }
+		 
+		 if (authentication != null && authentication.getAuthorities() != null) {
 		        for (GrantedAuthority authority : authentication.getAuthorities()) {
 		            if ("ROLE_ADMIN".equals(authority.getAuthority())) {
 		                model.addAttribute("isAdmin", true);

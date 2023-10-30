@@ -106,7 +106,7 @@ public class AuthController {
 		}
 
 		userDetailsService.createUser(user);
-		return "redirect:/register";
+		return "redirect:/login";
 	}
 
 	private static void initialiseLogin(Model model) {
