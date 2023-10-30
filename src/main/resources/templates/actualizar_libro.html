@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Modificacion Libro</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 <body>
-
+	<h3>Gestion modificacion libro</h3>
+	<form action="#" th:action="@{/save/libro}" th:object="${copia}" method="post">
+		<input type="hidden" th:field="*{libro.id}">
+		<div class="form-group">
+		<h5 for="tipoLibro">Titulo del libro:</h5>
+		<input th:field="*{libro.titulo}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Tipo de Libro:</h5>
+        <div th:each="t : ${T(com.capgemini.model.TipoLibro).values()}">
+            <input type="radio" th:field="*{libro.tipo}" th:value="${t}" id="${t}" />
+            <label th:for="${t}" th:text="${t}"></label><br />
+        </div>
+    </div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Editorial:</h5>
+		<input th:field="*{libro.editorial}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Año del libro:</h5>
+		<input th:field="*{libro.anyo}" type="number" class="form-control">
+	</div>
+	
+	<div class="form-group">
+		<h5 for="tipoLibro">Nombre del autor:</h5>
+		<input th:field="*{libro.autor.nombre}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Nacionalidad:</h5>
+		<input th:field="*{libro.autor.nacionalidad}" type="text"  class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Fecha de nacimiento:</h5>
+		<input th:field="*{libro.autor.fechaNacimiento}" type="datetime" placeholder=" Año-mes-dia" class="form-control">
+	</div>
+	<div>
+	<button type="submit" class="btn btn-info col2">Guardar Libro</button>
+	<hr>
+	<a th:href="@{/}" class ="btn btn-danger btn-sm mb-3">volver</a>
+	</div>
+	</form>
+	<hr>
+	<a th:href="@{/}">Volver</a>
 </body>
 </html>

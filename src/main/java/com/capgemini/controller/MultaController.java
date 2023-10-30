@@ -1,29 +1,62 @@
 package com.capgemini.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.capgemini.model.Lector;
 import com.capgemini.model.Multa;
-import com.capgemini.model.Prestamo;
+import com.capgemini.service.LectorServiceImp;
 import com.capgemini.service.MultaService;
 
 @Controller
 public class MultaController {
-	
+
+	@Autowired
+	private LectorServiceImp lectorService;
+
+	@Autowired
 	private MultaService multaService;
-	
-	@PostMapping("/save/multa")
-	public String saveMulta(@ModelAttribute("prestamo") Multa multa) {
-		multaService.saveMulta(multa);
-		return "redirect:/";
+
+	@GetMapping("/multa")
+	public String multaForm(Model model) {
+		List<Lector> lectores = new ArrayList<>();
+		try {
+			lectores = lectorService.getAllLectores();
+		} catch (ServiceException se) {
+		}
+		model.addAttribute("lectores", lectores);
+		return "multa";
 	}
-	
-	@GetMapping("/delete/multa/{id}")
-	public String deleteMulta(@PathVariable(value="id") long id) {
-		this.multaService.deleteMultaById(id);
-		return "redirect:/";
+
+	@PostMapping("/multa")
+	public String multarLector(@RequestParam("lectorId") Long lectorId, @RequestParam("dias") int dias, Model model) {
+		List<Lector> lectores = new ArrayList<>();
+		try {
+			lectores = lectorService.getAllLectores();
+		} catch (ServiceException se) {
+		}
+
+		Lector lector = null;
+		try {
+			lector = lectorService.getLectorById(lectorId);
+		} catch (ServiceException se) {
+		}
+
+		Multa multa = lector.multar(dias);
+		multa.setLector(lector);
+		multaService.saveMulta(multa);
+		model.addAttribute("message", "Lector multado con éxito");
+
+		model.addAttribute("lectores", lectores);
+		return "multa";
 	}
 }

@@ -1,5 +1,6 @@
 package com.capgemini.model;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -29,6 +30,17 @@ public class Lector {
 	@OneToMany(mappedBy="lector", targetEntity=Prestamo.class, cascade=CascadeType.ALL)
 	private Set<Prestamo> prestamos;
 
+	public Multa multar(int n) {
+		if (this.multa != null) {
+			throw new IllegalStateException("El lector ya tiene una multa activa");
+		}
+		Multa multa = new Multa(LocalDate.now(), LocalDate.now().plusDays(n), this);
+		this.multa = multa;
+		return multa;
+	}
+	
+	
+	
 	public Long getnSocio() {
 		return nSocio;
 	}

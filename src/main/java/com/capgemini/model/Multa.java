@@ -2,6 +2,7 @@ package com.capgemini.model;
 
 import java.time.LocalDate;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,9 +24,20 @@ public class Multa {
 	private Long id;
 	
 	@Column
-	private LocalDate inicio;
+	private LocalDate fInicio;
 	@Column
-	private LocalDate fin;
+	private LocalDate fFin;
+	
+	@OneToOne
+	private Lector lector;
+	
+
+	public Multa(LocalDate fInicio, LocalDate fFin, Lector lector) {
+		super();
+		this.fInicio = fInicio;
+		this.fFin = fFin;
+		this.lector = lector;
+	}
 	
 	public Long getId() {
 		return id;
@@ -34,17 +46,23 @@ public class Multa {
 		this.id = id;
 	}
 	public LocalDate getInicio() {
-		return inicio;
+		return fInicio;
 	}
 	public void setInicio(LocalDate inicio) {
-		this.inicio = inicio;
+		this.fInicio = inicio;
 	}
 	public LocalDate getFin() {
-		return fin;
+		return fFin;
 	}
 	public void setFin(LocalDate fin) {
-		this.fin = fin;
+		this.fFin = fin;
 	}
-	
+	public Lector getLector() {
+		return lector;
+	}
+
+	public void setLector(Lector lector2) {
+		this.lector = lector2;
+	}
 	
 }
