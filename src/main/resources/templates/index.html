@@ -70,10 +70,10 @@ header {
 						<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
     						<button type="submit" class="btn btn-primary">Prestar</button>
     					</form>
-						<a th:href="@{/devolver/{id}(id=${copia.id})}" class="btn btn-danger">Devolver</a>
+						<a th:href="@{/devolver/{id}(id=${copia.id})}" class="btn btn-success">Devolver</a>
 					</td>
 					<td>
-						<a th:href="@{/update/libro/{id}(id=${copia.libro.id})}" id="actualizarLibro" class="btn  btn-dark btn-sm mb-3"   th:if="${isAdmin}">Modificar Libro</a>
+						<a th:href="@{/delete/libro/{id}(id=${copia.libro.id})}" th:if="${isAdmin}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
 					</td>
 				</div>
 			</tr>

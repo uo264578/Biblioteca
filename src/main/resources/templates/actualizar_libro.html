@@ -7,11 +7,11 @@
 </head>
 <body>
 	<h3>Gestion modificacion libro</h3>
-	<form action="#" th:action="@{/save/libro}" th:object="${copia}" method="post">
-		<input type="hidden" th:field="*{libro.id}">
+	<form action="#" th:action="@{/save/libro}" th:object="${libro}" method="post">
+		<input type="hidden" th:field="*{id}">
 		<div class="form-group">
 		<h5 for="tipoLibro">Titulo del libro:</h5>
-		<input th:field="*{libro.titulo}" type="text" class="form-control">
+		<input th:field="*{titulo}" type="text" class="form-control">
 	</div>
 	<div class="form-group">
 		<h5 for="tipoLibro">Tipo de Libro:</h5>
