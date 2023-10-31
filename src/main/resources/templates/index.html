@@ -90,18 +90,14 @@ header {
 						</div>
 
 						<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado and copia.prestamo.lector.nombre == lector?.nombre}">
-							<form action="#"   th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
-								<button type="submit" class="btn btn-success">Devolver</button>
-							</form>
-							</div>
-
-    					<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado}">
 							<div th:if="${isAdmin != true}">
-								<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
-    								<button type="submit" class="btn btn-success">Devolver</button>
-    							</form>
+								<form action="#"   th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
+									<button type="submit" class="btn btn-success">Devolver</button>
+								</form>
 							</div>
-    					</div>
+						</div>
+
+    					
     					
 						<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Biblioteca}">
 							<div th:if="${isAdmin == true}">
@@ -122,13 +118,10 @@ header {
     					
 					</td>
 					<td>
-<<<<<<< Updated upstream
 						<a th:href="@{/libro/delete/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
-=======
 						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
 							<a th:href="@{/delete/copia/{id}(id=${copia.id})}" class="btn  btn-danger btn-sm mb-3" th:if="${isAdmin}">Eliminar Copia</a>
 						</div>
->>>>>>> Stashed changes
 					</td>
 				</div>
 			</tr>
