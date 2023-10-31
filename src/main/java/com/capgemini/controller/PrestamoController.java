@@ -1,6 +1,7 @@
 package com.capgemini.controller;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.model.EstadoCopia;
 import com.capgemini.model.Lector;
+import com.capgemini.model.Multa;
 import com.capgemini.model.Prestamo;
 import com.capgemini.repository.LectorRepository;
 import com.capgemini.service.CopiaService;
 import com.capgemini.service.LectorService;
+import com.capgemini.service.MultaService;
 import com.capgemini.service.PrestamoService;
 
 @Controller
@@ -34,6 +37,9 @@ public class PrestamoController {
 	@Autowired
 	private LectorService lectorService;
 	
+	@Autowired
+	private MultaService multaService;
+	
 //	@GetMapping("/")
 //	public String viewHomePage() {
 //		return "index";
@@ -45,7 +51,7 @@ public class PrestamoController {
 		this.copiaService.updatePrestadoCopiaById(id);
 		prestamo.setCopia(this.copiaService.getCopiaById(id));
 		prestamo.setInicio(LocalDate.now());
-		prestamo.setFin(LocalDate.now().plusDays(7));
+		prestamo.setFin(LocalDate.now().plusDays(1));
 		
 		Lector lector = this.lectorService.getLectorById(lectorId);//cambiar por usuario
 		prestamo.setLector(lector);
@@ -65,15 +71,17 @@ public class PrestamoController {
 	@PostMapping("/devolver/prestamo/{id}")
 	public String devolverCopia(@PathVariable(value="id") long idCopia, Model model) {
 	    this.copiaService.updateDevueltoCopiaById(idCopia);
-	    Long prestamoId = this.copiaService.getCopiaById(idCopia).getPrestamo().getId();
-	    String lectorPrestamo = this.prestamoService.getPrestamoById(prestamoId).getLector().getNombre();
+	    Prestamo prestamo = this.copiaService.getCopiaById(idCopia).getPrestamo();
+	    Lector lectorPrestamo = this.prestamoService.getPrestamoById(prestamo.getId()).getLector();
 	    this.copiaService.getCopiaById(idCopia).setPrestamo(null);
-	    this.prestamoService.deletePrestamoById(prestamoId);
-
-	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    String usuarioLogueado = userDetails.getUsername(); // Obtén el nombre del usuario logueado
+	    this.prestamoService.deletePrestamoById(prestamo.getId());
+	    long diasTranscurridos = ChronoUnit.DAYS.between(prestamo.getFin(), LocalDate.now());
+	    if(diasTranscurridos >10) {
+	    	Multa multa = lectorPrestamo.multar((int)diasTranscurridos*2);
+			multa.setLector(lectorPrestamo);
+			multaService.saveMulta(multa);
+	    }
 	    model.addAttribute("lectorPrestamo", lectorPrestamo);
-	    model.addAttribute("usuarioLogueado", usuarioLogueado);
 
 	    return "redirect:/";
 	}

@@ -70,18 +70,20 @@ header {
 					<td th:text="${copia.libro.autor.nombre}"></td>
 					<td th:text="${copia.estadoCopia}"></td>
 					<td>
-						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
+						
+						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado  }">
 							<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
 								<input type="hidden" name="lectorId" th:value="${lector?.nSocio}" />
 								<button type="submit" class="btn btn-primary">Prestar</button>
 							</form>
 						</div>
+						</div>
 
 						<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado and copia.prestamo.lector.nombre == lector?.nombre}">
-							<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
+							<form action="#"   th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
 								<button type="submit" class="btn btn-success">Devolver</button>
 							</form>
-						</div>
+							</div>
 
     					
 					</td>
