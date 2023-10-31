@@ -55,10 +55,21 @@ public class CopiaController {
 		 UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		 if (userDetails != null) {
 		       
-		        String userId = userDetails.getUsername();      
+		        String nombreLector = userDetails.getUsername();    
+		        List<Lector> lectores = this.lectorService.getAllLectores();
+		        boolean existe = false;
+		        for(Lector l : lectores) {
+		        	if(nombreLector == l.getNombre()) {
+		        		existe = true;
+		        	}
+		        }
+		        if(existe) {
 		        Lector lector = new Lector();
-		        lector.setNombre(userId);		        
+		        lector.setNombre(nombreLector);		        
 		        lectorService.saveLector(lector);
+		        model.addAttribute("lector", lector);
+		        
+		        }
 		    }
 		 
 		 if (authentication != null && authentication.getAuthorities() != null) {
