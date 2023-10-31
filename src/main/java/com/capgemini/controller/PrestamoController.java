@@ -2,6 +2,8 @@ package com.capgemini.controller;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,6 +49,8 @@ public class PrestamoController {
 	@Transactional
 	@PostMapping("/add/prestamo/{id}")
 	public String savePrestamo( @RequestParam(name = "lectorId") long lectorId, Model model, @PathVariable(value="id") long id) {
+		Set<Prestamo> prestamos= this.lectorService.getLectorById(id).getPrestamos();
+		if(prestamos.size()<3) {
 		Prestamo prestamo = new Prestamo();
 		this.copiaService.updatePrestadoCopiaById(id);
 		prestamo.setCopia(this.copiaService.getCopiaById(id));
@@ -58,7 +62,10 @@ public class PrestamoController {
 		this.prestamoService.savePrestamo(prestamo);
 		
 		this.copiaService.getCopiaById(id).setPrestamo(this.prestamoService.getPrestamoById(prestamo.getId()));
-		
+		}
+		else {
+			model.addAttribute("error","No puedes tener mas de 3 prestamos activos");
+		}
 		return "redirect:/";
 	}
 	
