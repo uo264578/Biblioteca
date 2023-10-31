@@ -5,6 +5,44 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<form action="#" th:action="@{/save/libro}" th:object="${libro}" method= "post">
+	<div class="form-group">
+		<h5 for="tipoLibro">Titulo del libro:</h5>
+		<input th:field="*{titulo}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Tipo de Libro:</h5>
+        <div th:each="t : ${T(com.capgemini.model.TipoLibro).values()}">
+            <input type="radio" th:field="*{tipo}" th:value="${t}" id="${t}" />
+            <label th:for="${t}" th:text="${t}"></label><br />
+        </div>
+    </div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Editorial:</h5>
+		<input th:field="*{editorial}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Año del libro:</h5>
+		<input th:field="*{anyo}" type="number" class="form-control">
+	</div>
+	
+	<div class="form-group">
+		<h5 for="tipoLibro">Nombre del autor:</h5>
+		<input th:field="*{autor.nombre}" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Nacionalidad:</h5>
+		<input th:field="*{autor.nacionalidad}" type="text"  class="form-control">
+	</div>
+	<div class="form-group">
+		<h5 for="tipoLibro">Fecha de nacimiento:</h5>
+		<input th:field="*{autor.fechaNacimiento}" type="datetime" placeholder=" Año-mes-dia" class="form-control">
+	</div>
+	<div>
+	<button type="submit" class="btn btn-info col2">Guardar Libro</button>
+	<hr>
+	<a th:href="@{/}" class ="btn btn-danger btn-sm mb-3">volver</a>
+	</div>
+</form>
 </body>
 </html>

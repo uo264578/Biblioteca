@@ -59,16 +59,16 @@ public class CopiaController {
 		        List<Lector> lectores = this.lectorService.getAllLectores();
 		        boolean existe = false;
 		        for(Lector l : lectores) {
-		        	if(nombreLector == l.getNombre()) {
+		        	if(nombreLector.equals(l.getNombre())) {
 		        		existe = true;
+	        		model.addAttribute("lector", l);
 		        	}
 		        }
-		        if(existe) {
+		        if(!existe) {
 		        Lector lector = new Lector();
 		        lector.setNombre(nombreLector);		        
 		        lectorService.saveLector(lector);
 		        model.addAttribute("lector", lector);
-		        
 		        }
 		    }
 		 

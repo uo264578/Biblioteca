@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.model.EstadoCopia;
 import com.capgemini.model.Lector;
@@ -37,13 +38,13 @@ public class PrestamoController {
 //	}
 	@Transactional
 	@PostMapping("/add/prestamo/{id}")
-	public String savePrestamo(Model model, @PathVariable(value="id") long id) {
+	public String savePrestamo( @RequestParam(name = "lectorId") long lectorId, Model model, @PathVariable(value="id") long id) {
 		Prestamo prestamo = new Prestamo();
 		this.copiaService.updatePrestadoCopiaById(id);
 		prestamo.setCopia(this.copiaService.getCopiaById(id));
 		prestamo.setInicio(LocalDate.now());
 		
-		Lector lector = this.lectorService.getLectorById(1);//cambiar por usuario
+		Lector lector = this.lectorService.getLectorById(lectorId);//cambiar por usuario
 		prestamo.setLector(lector);
 		this.prestamoService.savePrestamo(prestamo);
 		

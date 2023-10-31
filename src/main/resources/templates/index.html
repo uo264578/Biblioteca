@@ -40,6 +40,7 @@ header {
 	 <header>
         <h1>Listado de libros</h1>
  <a th:href="@{/add/lector/}" id="perfilButton" class ="btn btn-secondary">Perfil</a>
+  <h1>Bienvenido, <span th:text="${lector?.nombre}"></span></h1>
        <a th:href="@{/logout}" id="logoutButton" class ="btn btn-danger">Log out</a>
     </header>
 <a th:href="@{/add/libro}" id="añadirLibro" class="btn btn-primary btn-sm mb-3"   th:if="${isAdmin}">Añadir Libro</a>
@@ -68,10 +69,12 @@ header {
 					<td th:text="${copia.estadoCopia}"></td>
 					<td>
 						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
-						<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
-    						<button type="submit" class="btn btn-primary">Prestar</button>
-    					</form>
-    					</div>
+							<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
+								<input type="hidden" name="lectorId" th:value="${lector?.nSocio}" />
+								<button type="submit" class="btn btn-primary">Prestar</button>
+							</form>
+						</div>
+
     					<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado}">
 						<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
     						<button type="submit" class="btn btn-success">Devolver</button>
