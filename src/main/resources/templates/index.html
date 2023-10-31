@@ -43,7 +43,7 @@ header {
   <h1>Bienvenido, <span th:text="${lector?.nombre}"></span></h1>
        <a th:href="@{/logout}" id="logoutButton" class ="btn btn-danger">Log out</a>
     </header>
-<a th:href="@{/add/libro}" id="añadirLibro" class="btn btn-primary btn-sm mb-3"   th:if="${isAdmin}">Añadir Libro</a>
+<a th:href="@{/add/libro}" id="añadirLibro" class="btn btn-primary btn-sm mb-3" th:if="${isAdmin}">Añadir Libro</a>
 
 
 <div class="container"> 
@@ -69,16 +69,36 @@ header {
 					<td th:text="${copia.estadoCopia}"></td>
 					<td>
 						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
+							<div th:if="${isAdmin != true}">
 							<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
 								<input type="hidden" name="lectorId" th:value="${lector?.nSocio}" />
 								<button type="submit" class="btn btn-primary">Prestar</button>
 							</form>
+							</div>
 						</div>
 
     					<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado}">
-						<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
-    						<button type="submit" class="btn btn-success">Devolver</button>
-    					</form>
+							<div th:if="${isAdmin != true}">
+								<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
+    								<button type="submit" class="btn btn-success">Devolver</button>
+    							</form>
+							</div>
+    					</div>
+    					
+						<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Biblioteca}">
+							<div th:if="${isAdmin == true}">
+								<form action="#" th:action="@{/reparar/copia/{id}(id=${copia.id})}" method="post">
+    								<button type="submit" class="btn btn-success">Reparar</button>
+    							</form>
+							</div>
+    					</div>
+    					
+    					<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Reparacion}">
+							<div th:if="${isAdmin == true}">
+								<form action="#" th:action="@{/arreglada/copia/{id}(id=${copia.id})}" method="post">
+    								<button type="submit" class="btn btn-success">Arreglado</button>
+    							</form>
+							</div>
     					</div>
     					
 					</td>

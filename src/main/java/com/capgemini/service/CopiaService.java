@@ -17,4 +17,5 @@ public interface CopiaService {
 	void updateDevueltoCopiaById(long id);
 	
 	Page<Copia> findPaginated(int pageNum, int pageSize, String sortField, String sortDirection);
+	void reparaCopiaById(long idCopia);
 }

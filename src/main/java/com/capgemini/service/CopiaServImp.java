@@ -72,4 +72,9 @@ public class CopiaServImp implements CopiaService{
 		this.copiaRepository.getById(id).setEstadoCopia(EstadoCopia.Biblioteca);
 	}
 
+	@Override
+	public void reparaCopiaById(long idCopia) {
+		this.copiaRepository.getById(idCopia).setEstadoCopia(EstadoCopia.Reparacion);
+	}
+
 }

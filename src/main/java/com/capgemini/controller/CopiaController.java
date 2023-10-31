@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -109,6 +110,20 @@ public class CopiaController {
 		Copia copia= this.copiaService.getCopiaById(id);
 		model.addAttribute("copia", copia);
 		return "actualizar_copia";
+	}
+	
+	@Transactional
+	@PostMapping("/reparar/copia/{id}")
+	public String repararCopia(@PathVariable(value="id") long idCopia,Model model) {
+		this.copiaService.reparaCopiaById(idCopia);
+		return "redirect:/";
+	}
+	
+	@Transactional
+	@PostMapping("/arreglada/copia/{id}")
+	public String arregladaCopia(@PathVariable(value="id") long idCopia,Model model) {
+		this.copiaService.updateDevueltoCopiaById(idCopia);
+		return "redirect:/";
 	}
 	
 	@GetMapping("/add/copia")
