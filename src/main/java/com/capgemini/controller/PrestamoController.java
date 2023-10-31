@@ -68,6 +68,7 @@ public class PrestamoController {
 		return "redirect:/";
 	}
 	
+	@Transactional
 	@PostMapping("/devolver/prestamo/{id}")
 	public String devolverCopia(@PathVariable(value="id") long idCopia, Model model) {
 	    this.copiaService.updateDevueltoCopiaById(idCopia);
@@ -85,7 +86,7 @@ public class PrestamoController {
 
 	    return "redirect:/";
 	}
-
+	
 //	
 //	@GetMapping("/add/prestamo")
 //	public String showNewPrestamoForm(Model model) {
