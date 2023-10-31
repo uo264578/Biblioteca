@@ -4,13 +4,12 @@ import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.capgemini.model.EstadoCopia;
 import com.capgemini.model.Lector;
@@ -36,8 +35,8 @@ public class PrestamoController {
 //	public String viewHomePage() {
 //		return "index";
 //	}
-	
-	@RequestMapping(value = "/add/prestamo/{id}", method = RequestMethod.POST)
+	@Transactional
+	@PostMapping("/add/prestamo/{id}")
 	public String savePrestamo(Model model, @PathVariable(value="id") long id) {
 		Prestamo prestamo = new Prestamo();
 		this.copiaService.updatePrestadoCopiaById(id);
@@ -46,9 +45,9 @@ public class PrestamoController {
 		
 		Lector lector = this.lectorService.getLectorById(1);//cambiar por usuario
 		prestamo.setLector(lector);
-		prestamoService.savePrestamo(prestamo);
+		this.prestamoService.savePrestamo(prestamo);
 		
-		this.copiaService.getCopiaById(id).setPrestamo(prestamo);
+		this.copiaService.getCopiaById(id).setPrestamo(this.prestamoService.getPrestamoById(prestamo.getId()));
 		
 		return "redirect:/";
 	}
@@ -59,10 +58,12 @@ public class PrestamoController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value = "/devolver/prestamo/{id}", method = RequestMethod.POST)
-	public String showFormForUpdate(@PathVariable(value="id") long idCopia,@PathVariable(value="id") long idPrestamo,Model model) {
-		this.copiaService.getCopiaById(idCopia).setEstadoCopia(EstadoCopia.Biblioteca);
-		//model.addAttribute("prestamo", prestamo);
+	@PostMapping("/devolver/prestamo/{id}")
+	public String devolverCopia(@PathVariable(value="id") long idCopia,Model model) {
+		this.copiaService.updateDevueltoCopiaById(idCopia);
+		Long prestamoId = this.copiaService.getCopiaById(idCopia).getPrestamo().getId();
+		this.copiaService.getCopiaById(idCopia).setPrestamo(null);
+		this.prestamoService.deletePrestamoById(prestamoId);
 		return "redirect:/";
 	}
 //	

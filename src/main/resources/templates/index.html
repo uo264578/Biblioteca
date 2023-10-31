@@ -64,11 +64,11 @@ header {
 					<td th:text="${copia.libro.tipo}"></td>
 					<td th:text="${copia.libro.editorial}"></td>
 					<td th:text="${copia.libro.anyo}"></td>
-						<td th:text="${copia.libro.autor.nombre}"></td>
+					<td th:text="${copia.libro.autor.nombre}"></td>
 					<td th:text="${copia.estadoCopia}"></td>
 					<td>
 						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
-						<form action="#" th:action="@{/add/prestamo/{idcopia}(idcopia=${copia.id})}" method="post">
+						<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
     						<button type="submit" class="btn btn-primary">Prestar</button>
     					</form>
     					</div>

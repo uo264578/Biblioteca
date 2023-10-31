@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.model.Copia;
 import com.capgemini.model.EstadoCopia;
@@ -59,13 +60,13 @@ public class CopiaServImp implements CopiaService{
 		return this.copiaRepository.findAll(pageable);
 	}
 
-	@SuppressWarnings("deprecation")
+	@Transactional
 	@Override
 	public void updatePrestadoCopiaById(long id) {
 		this.copiaRepository.getById(id).setEstadoCopia(EstadoCopia.Prestado);
 	}
 
-	@SuppressWarnings("deprecation")
+	@Transactional
 	@Override
 	public void updateDevueltoCopiaById(long id) {
 		this.copiaRepository.getById(id).setEstadoCopia(EstadoCopia.Biblioteca);
