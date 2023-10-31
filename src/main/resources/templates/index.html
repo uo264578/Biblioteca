@@ -58,6 +58,7 @@ header {
 				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.anyo&sortDir=' + ${reverseSortDir}}">Año</a></th>
 				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.autor.nombre&sortDir=' + ${reverseSortDir}}">Autor</a></th>
 				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=estadoCopia&sortDir=' + ${reverseSortDir}}">Estado</a></th>
+				<th th:if="${isAdmin}" ><a for="numCopias">Numero de copias:</a></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -69,6 +70,14 @@ header {
 					<td th:text="${copia.libro.anyo}"></td>
 					<td th:text="${copia.libro.autor.nombre}"></td>
 					<td th:text="${copia.estadoCopia}"></td>
+					<div th:if="${isAdmin}">
+						<td> 
+							<input type="number" id="cantidadCopias" name="cantidadCopias"  />
+							<form action="#" th:action="@{/save/copia/{id}(id=${copia.libro.id})}" method="post">
+    								<button type="submit" class="btn btn-success">Añadir copias</button>
+    							</form>
+						</td>
+					</div>
 					<td>
 						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
 							<div th:if="${isAdmin != true}">
@@ -110,9 +119,16 @@ header {
 							</div>
     					</div>
     					
+    					
 					</td>
 					<td>
+<<<<<<< Updated upstream
 						<a th:href="@{/libro/delete/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
+=======
+						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
+							<a th:href="@{/delete/copia/{id}(id=${copia.id})}" class="btn  btn-danger btn-sm mb-3" th:if="${isAdmin}">Eliminar Copia</a>
+						</div>
+>>>>>>> Stashed changes
 					</td>
 				</div>
 			</tr>

@@ -127,6 +127,12 @@ public class CopiaController {
 		return "redirect:/";
 	}
 	
+	@PostMapping("/save/copia/{id}")
+	public String añadirCopias(@ModelAttribute("copia") Copia copia) {
+		//copiaService.saveCopia(copia);
+		return "redirect:/";
+	}
+	
 	@GetMapping("/add/copia")
 	public String showNewCopiaForm(Model model) {
 		Copia copia = new Copia();
