@@ -41,6 +41,8 @@ header {
         <h1>Listado de libros</h1>
  <a th:href="@{/add/lector/}" id="perfilButton" class ="btn btn-secondary">Perfil</a>
   <h1>Bienvenido, <span th:text="${lector?.nombre}"></span></h1>
+ 
+
        <a th:href="@{/logout}" id="logoutButton" class ="btn btn-danger">Log out</a>
     </header>
 <a th:href="@{/add/libro}" id="añadirLibro" class="btn btn-primary btn-sm mb-3"   th:if="${isAdmin}">Añadir Libro</a>
@@ -75,15 +77,16 @@ header {
 							</form>
 						</div>
 
-    					<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado}">
-						<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
-    						<button type="submit" class="btn btn-success">Devolver</button>
-    					</form>
-    					</div>
+						<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado and copia.prestamo.lector.nombre == lector?.nombre}">
+							<form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
+								<button type="submit" class="btn btn-success">Devolver</button>
+							</form>
+						</div>
+
     					
 					</td>
 					<td>
-						<a th:href="@{/delete/libro/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
+						<a th:href="@{/libro/delete/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
 					</td>
 				</div>
 			</tr>

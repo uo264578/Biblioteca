@@ -51,8 +51,8 @@ public class CopiaController {
 		Page<Copia> page=copiaService.findPaginated(pageNo, pageSize, sortField, sortDir);
 		//List<Libro> listLibros=page.getContent();
 		List<Copia> listCopias=copiaService.getAllCopias();
-		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		 if (userDetails != null) {
 		       
 		        String nombreLector = userDetails.getUsername();    
@@ -71,7 +71,8 @@ public class CopiaController {
 		        model.addAttribute("lector", lector);
 		        }
 		    }
-		 
+
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		 if (authentication != null && authentication.getAuthorities() != null) {
 		        for (GrantedAuthority authority : authentication.getAuthorities()) {
 		            if ("ROLE_ADMIN".equals(authority.getAuthority())) {

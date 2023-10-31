@@ -50,7 +50,7 @@ public class MultaController {
 			lector = lectorService.getLectorById(lectorId);
 		} catch (ServiceException se) {
 		}
-
+		
 		Multa multa = lector.multar(dias);
 		multa.setLector(lector);
 		multaService.saveMulta(multa);

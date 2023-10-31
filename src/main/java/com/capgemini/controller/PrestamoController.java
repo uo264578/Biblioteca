@@ -3,6 +3,8 @@ package com.capgemini.controller;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,6 +45,7 @@ public class PrestamoController {
 		this.copiaService.updatePrestadoCopiaById(id);
 		prestamo.setCopia(this.copiaService.getCopiaById(id));
 		prestamo.setInicio(LocalDate.now());
+		prestamo.setFin(LocalDate.now().plusDays(7));
 		
 		Lector lector = this.lectorService.getLectorById(lectorId);//cambiar por usuario
 		prestamo.setLector(lector);
@@ -60,13 +63,21 @@ public class PrestamoController {
 	}
 	
 	@PostMapping("/devolver/prestamo/{id}")
-	public String devolverCopia(@PathVariable(value="id") long idCopia,Model model) {
-		this.copiaService.updateDevueltoCopiaById(idCopia);
-		Long prestamoId = this.copiaService.getCopiaById(idCopia).getPrestamo().getId();
-		this.copiaService.getCopiaById(idCopia).setPrestamo(null);
-		this.prestamoService.deletePrestamoById(prestamoId);
-		return "redirect:/";
+	public String devolverCopia(@PathVariable(value="id") long idCopia, Model model) {
+	    this.copiaService.updateDevueltoCopiaById(idCopia);
+	    Long prestamoId = this.copiaService.getCopiaById(idCopia).getPrestamo().getId();
+	    String lectorPrestamo = this.prestamoService.getPrestamoById(prestamoId).getLector().getNombre();
+	    this.copiaService.getCopiaById(idCopia).setPrestamo(null);
+	    this.prestamoService.deletePrestamoById(prestamoId);
+
+	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String usuarioLogueado = userDetails.getUsername(); // Obtén el nombre del usuario logueado
+	    model.addAttribute("lectorPrestamo", lectorPrestamo);
+	    model.addAttribute("usuarioLogueado", usuarioLogueado);
+
+	    return "redirect:/";
 	}
+
 //	
 //	@GetMapping("/add/prestamo")
 //	public String showNewPrestamoForm(Model model) {
