@@ -42,28 +42,28 @@
         </div>
     </div>
 	<div class="form-group">
-		<h5 for="tipoLibro">Editorial:</h5>
+		<h5 for="editorial">Editorial:</h5>
 		<input th:field="*{editorial}" type="text" class="form-control">
 	</div>
 	<div class="form-group">
-		<h5 for="tipoLibro">Año del libro:</h5>
+		<h5 for="anyo">Año del libro:</h5>
 		<input th:field="*{anyo}" type="number" class="form-control" min="1" value="1">
 	</div>
 	
 	<div class="form-group">
-		<h5 for="tipoLibro">Nombre del autor:</h5>
+		<h5 for="nombreAutor">Nombre del autor:</h5>
 		<input th:field="*{autor.nombre}" type="text" class="form-control">
 	</div>
 	<div class="form-group">
-		<h5 for="tipoLibro">Nacionalidad:</h5>
+		<h5 for="nacionalidad">Nacionalidad:</h5>
 		<input th:field="*{autor.nacionalidad}" type="text"  class="form-control">
 	</div>
 	<div class="form-group">
-		<h5 for="tipoLibro">Fecha de nacimiento:</h5>
+		<h5 for="nacimiento">Fecha de nacimiento:</h5>
 		<input th:field="*{autor.fechaNacimiento}" type="datetime" placeholder=" Año-mes-dia" class="form-control">
 	</div>
 	<div>
-	<button type="submit" class="btn btn-info col2">Guardar Libro</button>
+	<button type="submit" id="guardarLibro" class="btn btn-info col2">Guardar Libro</button>
 	<hr>
 	<a th:href="@{/}" class ="btn btn-danger btn-sm mb-3">volver</a>
 	</div>

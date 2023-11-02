@@ -84,7 +84,7 @@ header {
                             <div th:if="${isAdmin != true}">
                             <form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
                                 <input type="hidden" name="lectorId" th:value="${lector?.nSocio}" />
-                                <button type="submit" class="btn btn-primary">Prestar</button>
+                                <button type="submit" id="botonPrestar" class="btn btn-primary">Prestar</button>
                             </form>
                             </div>
                         </div>
@@ -118,7 +118,7 @@ header {
                         
                     </td>
                     <td>
-                        <a th:href="@{/libro/delete/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
+                        <a th:href="@{/delete/copia/{id}(id=${copia.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
                     </td>
                 </div>
             </tr>
