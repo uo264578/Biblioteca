@@ -18,10 +18,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.capgemini.model.Copia;
+import com.capgemini.model.EstadoCopia;
 import com.capgemini.model.Lector;
+import com.capgemini.model.Libro;
 import com.capgemini.model.Prestamo;
 import com.capgemini.service.CopiaService;
 import com.capgemini.service.LectorService;
+import com.capgemini.service.LibroService;
 import com.capgemini.service.PrestamoService;
 
 @Controller
@@ -32,6 +35,9 @@ public class CopiaController {
 	
 	@Autowired 
 	private LectorService lectorService;
+	
+	@Autowired 
+	private LibroService libroService;
 	
 	@Autowired 
 	private PrestamoService prestamoService;
@@ -126,12 +132,19 @@ public class CopiaController {
 		this.copiaService.updateDevueltoCopiaById(idCopia);
 		return "redirect:/";
 	}
-	
+	@Transactional
 	@PostMapping("/save/copia/{id}")
-	public String añadirCopias(@ModelAttribute("copia") Copia copia) {
-		//copiaService.saveCopia(copia);
+	public String añadirCopias(@ModelAttribute("copia") Copia copia, @RequestParam("cantidadCopias") int cantidadCopias, @RequestParam("libroId") Long libroId) {
+		Libro libro = libroService.getLibroById(cantidadCopias);
+		for(int i=0;i<cantidadCopias;i++) {
+			Copia copia2 = new Copia();
+			copia2.setLibro(libro);
+			copia2.setEstadoCopia(EstadoCopia.Biblioteca);
+			copiaService.saveCopia(copia2);
+		}
 		return "redirect:/";
 	}
+	
 	
 	@GetMapping("/add/copia")
 	public String showNewCopiaForm(Model model) {

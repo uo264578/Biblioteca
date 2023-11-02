@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 <style>
-	
-	body {
+    
+    body {
     margin: 0;
     padding: 0;
 }
@@ -20,7 +20,7 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-	#logoutButton {
+    #logoutButton {
     text-decoration: none;
     color: #fff;
     padding: 5px 10px;
@@ -33,11 +33,11 @@ header {
     background-color: #fff;
     color: #333;
 }
-	
+    
 </style>
 
 <body>
-	 <header>
+     <header>
         <h1>Listado de libros</h1>
  <a th:href="@{/add/lector/}" id="perfilButton" class ="btn btn-secondary">Perfil</a>
   <h1>Bienvenido, <span th:text="${lector?.nombre}"></span></h1>
@@ -49,110 +49,107 @@ header {
 
 
 <div class="container"> 
-	<table class="table table-striped table-responsive-md">
-		<thead>
-			<tr>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.titulo&sortDir=' + ${reverseSortDir}}">Titulo</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.tipo&sortDir=' + ${reverseSortDir}}">Tipo</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.editorial&sortDir=' + ${reverseSortDir}}">Editorial</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.anyo&sortDir=' + ${reverseSortDir}}">Año</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.autor.nombre&sortDir=' + ${reverseSortDir}}">Autor</a></th>
-				<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=estadoCopia&sortDir=' + ${reverseSortDir}}">Estado</a></th>
-				<th th:if="${isAdmin}" ><a for="numCopias">Numero de copias:</a></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="copia:${listCopias}" >
-				<div>
-					<td th:text="${copia.libro.titulo}"></td>
-					<td th:text="${copia.libro.tipo}"></td>
-					<td th:text="${copia.libro.editorial}"></td>
-					<td th:text="${copia.libro.anyo}"></td>
-					<td th:text="${copia.libro.autor.nombre}"></td>
-					<td th:text="${copia.estadoCopia}"></td>
-					<div th:if="${isAdmin}">
+    <table class="table table-striped table-responsive-md">
+        <thead>
+            <tr>
+                <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.titulo&sortDir=' + ${reverseSortDir}}">Titulo</a></th>
+                <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.tipo&sortDir=' + ${reverseSortDir}}">Tipo</a></th>
+                <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.editorial&sortDir=' + ${reverseSortDir}}">Editorial</a></th>
+                <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.anyo&sortDir=' + ${reverseSortDir}}">Año</a></th>
+                <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=libro.autor.nombre&sortDir=' + ${reverseSortDir}}">Autor</a></th>
+                <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=estadoCopia&sortDir=' + ${reverseSortDir}}">Estado</a></th>
+				<th th:if="${isAdmin == true}" ><a for="numCopias">Numero de copias:</a></th>            
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="copia:${listCopias}" >
+                <div>
+                    <td th:text="${copia.libro.titulo}"></td>
+                    <td th:text="${copia.libro.tipo}"></td>
+                    <td th:text="${copia.libro.editorial}"></td>
+                    <td th:text="${copia.libro.anyo}"></td>
+                    <td th:text="${copia.libro.autor.nombre}"></td>
+                    <td th:text="${copia.estadoCopia}"></td>
+                    <div th:if="${isAdmin}">
 						<td> 
-							<input type="number" id="cantidadCopias" name="cantidadCopias"  />
-							<form action="#" th:action="@{/save/copia/{id}(id=${copia.libro.id})}" method="post">
+							<form action="#" th:object="${copia}" th:action="@{/save/copia/{id}(id=${copia.id})}" method="post">
+								<input type="number" id="cantidadCopias" name="cantidadCopias" min="1" value="1" />
+								<input type="hidden" name="libroId" th:value="${copia.libro.id}" />
     								<button type="submit" class="btn btn-success">Añadir copias</button>
     							</form>
 						</td>
 					</div>
-					<td>
-						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
-							<div th:if="${isAdmin != true}">
-							<form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
-								<input type="hidden" name="lectorId" th:value="${lector?.nSocio}" />
-								<button type="submit" class="btn btn-primary">Prestar</button>
-							</form>
-							</div>
-						</div>
-						</div>
+                    <td>
+                        <div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
+                            <div th:if="${isAdmin != true}">
+                            <form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
+                                <input type="hidden" name="lectorId" th:value="${lector?.nSocio}" />
+                                <button type="submit" class="btn btn-primary">Prestar</button>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
 
-						<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado and copia.prestamo.lector.nombre == lector?.nombre}">
-							<div th:if="${isAdmin != true}">
-								<form action="#"   th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
-									<button type="submit" class="btn btn-success">Devolver</button>
-								</form>
-							</div>
-						</div>
+                       
 
-    					
-    					
-						<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Biblioteca}">
-							<div th:if="${isAdmin == true}">
-								<form action="#" th:action="@{/reparar/copia/{id}(id=${copia.id})}" method="post">
-    								<button type="submit" class="btn btn-success">Reparar</button>
-    							</form>
-							</div>
-    					</div>
-    					
-    					<div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Reparacion}">
-							<div th:if="${isAdmin == true}">
-								<form action="#" th:action="@{/arreglada/copia/{id}(id=${copia.id})}" method="post">
-    								<button type="submit" class="btn btn-success">Arreglado</button>
-    							</form>
-							</div>
-    					</div>
-    					
-    					
-					</td>
-					<td>
-						<a th:href="@{/libro/delete/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
-						<div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
-							<a th:href="@{/delete/copia/{id}(id=${copia.id})}" class="btn  btn-danger btn-sm mb-3" th:if="${isAdmin}">Eliminar Copia</a>
-						</div>
-					</td>
-				</div>
-			</tr>
-		</tbody>
-	</table>
+                        <div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Prestado and copia.prestamo.lector.nombre == lector?.nombre}"}>
+                            <div th:if="${isAdmin != true}">
+                                <form action="#" th:action="@{/devolver/prestamo/{id}(id=${copia.id})}" method="post">
+                                    <button type="submit" class="btn btn-success">Devolver</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Biblioteca}">
+                            <div th:if="${isAdmin == true}">
+                                <form action="#" th:action="@{/reparar/copia/{id}(id=${copia.id})}" method="post">
+                                    <button type="submit" class="btn btn-success">Reparar</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Reparacion}">
+                            <div th:if="${isAdmin == true}">
+                                <form action="#" th:action="@{/arreglada/copia/{id}(id=${copia.id})}" method="post">
+                                    <button type="submit" class="btn btn-success">Arreglado</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </td>
+                    <td>
+                        <a th:href="@{/libro/delete/{id}(id=${copia.libro.id})}" class="btn  btn-danger btn-sm mb-3"   th:if="${isAdmin}">Eliminar Libro</a>
+                    </td>
+                </div>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div th:if="${totalPages>1}">
-	<div class="row col-sm-10">
-		<div class="col-sm-5">Total filas: [[${totalItems}]]</div>
-		<div class="col-sm-3">
-			<span th:each="i:${#numbers.sequence(1,totalPages)}">
-				<a th:if="${currentPage != 1}" 
-				th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-					[[${i}]]
-				</a>
-				<span th:unless="${currentPage != 1}">[[${i}]]</span>
-			</span>
-		</div>
-		<div class="col-sm-1">
-			<a th:if="${currentPage < totalPages}" 
-				th:href="@{'/page/' + ${currentPage+1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-					Proxima
-				</a>
-			</div>
-		<div class="col-sm-1">
-			<a th:if="${currentPage < totalPages}" 
-				th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-					Ultima
-				</a>
-			</div>
-	</div>
+    <div class="row col-sm-10">
+        <div class="col-sm-5">Total filas: [[${totalItems}]]</div>
+        <div class="col-sm-3">
+            <span th:each="i:${#numbers.sequence(1,totalPages)}">
+                <a th:if="${currentPage != 1}" 
+                th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                    [[${i}]]
+                </a>
+                <span th:unless="${currentPage != 1}">[[${i}]]</span>
+            </span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" 
+                th:href="@{'/page/' + ${currentPage+1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                    Proxima
+                </a>
+            </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" 
+                th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                    Ultima
+                </a>
+            </div>
+    </div>
 </div>
 </body>
 </html>
