@@ -135,7 +135,7 @@ public class CopiaController {
 	@Transactional
 	@PostMapping("/save/copia/{id}")
 	public String añadirCopias(@ModelAttribute("copia") Copia copia, @RequestParam("cantidadCopias") int cantidadCopias, @RequestParam("libroId") Long libroId) {
-		Libro libro = libroService.getLibroById(cantidadCopias);
+		Libro libro = libroService.getLibroById(copia.getId());
 		for(int i=0;i<cantidadCopias;i++) {
 			Copia copia2 = new Copia();
 			copia2.setLibro(libro);
