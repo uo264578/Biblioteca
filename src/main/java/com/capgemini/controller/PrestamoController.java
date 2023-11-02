@@ -48,9 +48,13 @@ public class PrestamoController {
 //	}
 	@Transactional
 	@PostMapping("/add/prestamo/{id}")
-	public String savePrestamo( @RequestParam(name = "lectorId") long lectorId, Model model, @PathVariable(value="id") long id) {
-		Set<Prestamo> prestamos= this.lectorService.getLectorById(id).getPrestamos();
-		if(prestamos.size()<3) {
+	public String savePrestamo( @RequestParam(name = "lectorId") long lectorId, Model model,
+			@PathVariable(value="id") long id) {
+		
+		Set<Prestamo> prestamos= this.lectorService.getLectorById(lectorId).getPrestamos();
+		Multa multaLector= this.lectorService.getLectorById(lectorId).getMulta();
+		
+		if(prestamos.size()<3 && (multaLector == null || LocalDate.now().isAfter(multaLector.getFin()))) {
 		Prestamo prestamo = new Prestamo();
 		this.copiaService.updatePrestadoCopiaById(id);
 		prestamo.setCopia(this.copiaService.getCopiaById(id));
@@ -84,10 +88,11 @@ public class PrestamoController {
 	    this.copiaService.getCopiaById(idCopia).setPrestamo(null);
 	    this.prestamoService.deletePrestamoById(prestamo.getId());
 	    long diasTranscurridos = ChronoUnit.DAYS.between(prestamo.getFin(), LocalDate.now());
-	    if(diasTranscurridos >10) {
+	    if(diasTranscurridos >0) {
 	    	Multa multa = lectorPrestamo.multar((int)diasTranscurridos*2);
-			multa.setLector(lectorPrestamo);
+	    	multa.setLector(lectorPrestamo);
 			multaService.saveMulta(multa);
+			
 	    }
 	    model.addAttribute("lectorPrestamo", lectorPrestamo);
 

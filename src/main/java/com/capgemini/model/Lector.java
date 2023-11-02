@@ -33,11 +33,11 @@ public class Lector {
 	private Set<Prestamo> prestamos;
 
 	public Multa multar(int n) {
-		if (this.multa != null) {
-			throw new IllegalStateException("El lector ya tiene una multa activa");
+		if (this.multa == null) {
+			Multa multa = new Multa(LocalDate.now(), LocalDate.now().plusDays(n), this);
+			this.multa = multa;
+
 		}
-		Multa multa = new Multa(LocalDate.now(), LocalDate.now().plusDays(n), this);
-		this.multa = multa;
 		return multa;
 	}
 	

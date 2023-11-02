@@ -15,7 +15,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="")
+@Table(name="multa")
 public class Multa {
 
 	@Id
@@ -31,6 +31,9 @@ public class Multa {
 	@OneToOne
 	private Lector lector;
 	
+	public Multa() {
+		super();
+	}
 
 	public Multa(LocalDate fInicio, LocalDate fFin, Lector lector) {
 		super();
