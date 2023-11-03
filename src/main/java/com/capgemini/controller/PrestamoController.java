@@ -53,7 +53,6 @@ public class PrestamoController {
 		
 		Set<Prestamo> prestamos= this.lectorService.getLectorById(lectorId).getPrestamos();
 		Multa multaLector= this.lectorService.getLectorById(lectorId).getMulta();
-		
 		if(prestamos.size()<3 && (multaLector == null || LocalDate.now().isAfter(multaLector.getFin()))) {
 		Prestamo prestamo = new Prestamo();
 		this.copiaService.updatePrestadoCopiaById(id);
@@ -68,7 +67,8 @@ public class PrestamoController {
 		this.copiaService.getCopiaById(id).setPrestamo(this.prestamoService.getPrestamoById(prestamo.getId()));
 		}
 		else {
-			model.addAttribute("error","No puedes tener mas de 3 prestamos activos");
+		
+			model.addAttribute("error", "Ya tienes 3 libros prestados o una multa pendiente");
 		}
 		return "redirect:/";
 	}

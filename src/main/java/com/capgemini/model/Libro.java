@@ -2,6 +2,9 @@ package com.capgemini.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,10 +38,12 @@ public class Libro{
 	@Column
 	private int anyo;
 	
+	@JsonBackReference
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="fk_autor")
 	private Autor autor;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="libro", targetEntity=Copia.class, cascade=CascadeType.ALL)
 	private Set<Copia> copias;
 

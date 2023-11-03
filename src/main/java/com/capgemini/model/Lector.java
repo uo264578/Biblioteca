@@ -3,6 +3,8 @@ package com.capgemini.model;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -28,7 +30,7 @@ public class Lector {
 	private Multa multa;
 	
 	
-	
+	@JsonManagedReference
 	@OneToMany(mappedBy="lector", targetEntity=Prestamo.class, cascade=CascadeType.ALL)
 	private Set<Prestamo> prestamos;
 

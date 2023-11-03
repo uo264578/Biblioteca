@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -25,6 +26,7 @@ public class Autor {
 	@Column
 	private LocalDate fechaNacimiento;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="autor", targetEntity=Libro.class, cascade=CascadeType.ALL)
 	private Set<Libro> libros;
 

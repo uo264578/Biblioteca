@@ -1,9 +1,9 @@
 package com.campgemini;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -14,11 +14,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -26,12 +27,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import com.google.common.collect.ImmutableList;
-
 public class Pruebas {
 
 	private EdgeDriver driver;
 
-    @Before
+    @BeforeAll
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\pgarciac\\Desktop\\Proyectos\\Biblioteca\\resource\\edgedriver\\msedgedriver.exe");
 		this.driver = new EdgeDriver();
@@ -39,7 +39,7 @@ public class Pruebas {
 		this.driver.get("http://localhost:8080");
 	}
 
-	@After
+	@AfterAll
 	public void tearDown() {
 		driver.quit();
 	}
