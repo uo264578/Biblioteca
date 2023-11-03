@@ -80,7 +80,7 @@ header {
 						</td>
 					</div>
                     <td>
-                        <div th:if="${copia.estadoCopia != T(com.capgemini.model.EstadoCopia).Prestado}">
+                        <div th:if="${copia.estadoCopia == T(com.capgemini.model.EstadoCopia).Biblioteca}">
                             <div th:if="${isAdmin != true}">
                             <form action="#" th:action="@{/add/prestamo/{id}(id=${copia.id})}" method="post">
                                 <input type="hidden" name="lectorId" th:value="${lector?.nSocio}" />
